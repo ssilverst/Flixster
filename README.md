@@ -1,7 +1,7 @@
 # Project 2 - *Sam Silverstein*
 
 **Flixster** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
-
+modified (change later)
 Time spent: **X** hours spent in total
 
 ## User Stories
