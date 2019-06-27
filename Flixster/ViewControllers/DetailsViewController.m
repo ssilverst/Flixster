@@ -47,14 +47,19 @@
 }
 
 
-/*#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
-}*/
+//#pragma mark - Navigation
+// - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+// // Get the new view controller using [segue destinationViewController].
+// // Pass the selected object to the new view controller.
+//     NSString *baseURLString = @"https://www.youtube.com/watch?v=\";
+//     if ([self.movie[@"poster_path"] isKindOfClass:[NSString class]]) {
+//
+//     NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+// NSDictionary *movie = self.movies[indexPath.row];
+// DetailsViewController *detailsViewController = [segue destinationViewController];
+// detailsViewController.movie = movie;
+// NSLog(@"Tapping on a movie!");
+// }
 
 
 @end
