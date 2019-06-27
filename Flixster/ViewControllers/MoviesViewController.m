@@ -10,18 +10,21 @@
 #import "MovieCell.h"
 #import "DetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "SVProgressHUD.h"
 
 @interface MoviesViewController () < UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *movies;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+
 @end
 
 @implementation MoviesViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [SVProgressHUD show];
+
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self fetchMovies];
@@ -31,6 +34,7 @@
     [self.tableView insertSubview:self.refreshControl atIndex:0];
 }
 - (void)fetchMovies{
+    
     //Make the network call
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
@@ -54,6 +58,8 @@
             // TODO: Reload your table view data
         }
         [self.refreshControl endRefreshing];
+        [SVProgressHUD dismiss];
+
     }];
     [task resume];
 }
