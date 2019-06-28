@@ -8,6 +8,7 @@
 
 #import "DetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "VideoViewController.h"
 
 @interface DetailsViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *backdropView;
@@ -46,20 +47,17 @@
     [self.synopsisLabel sizeToFit];
 }
 
+- (IBAction)onTap:(id)sender {
+    [self performSegueWithIdentifier:@"videoSegue" sender:nil];
 
-//#pragma mark - Navigation
-// - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-// // Get the new view controller using [segue destinationViewController].
-// // Pass the selected object to the new view controller.
-//     NSString *baseURLString = @"https://www.youtube.com/watch?v=\";
-//     if ([self.movie[@"poster_path"] isKindOfClass:[NSString class]]) {
-//
-//     NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
-// NSDictionary *movie = self.movies[indexPath.row];
-// DetailsViewController *detailsViewController = [segue destinationViewController];
-// detailsViewController.movie = movie;
-// NSLog(@"Tapping on a movie!");
-// }
+}
 
-
+#pragma mark - Navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+     
+     NSString *movieID = [NSString stringWithFormat:@"%@", self.movie[@"id"]];
+     VideoViewController *videoViewController = [segue destinationViewController];
+     videoViewController.videoID = movieID;
+     
+ }
 @end

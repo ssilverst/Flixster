@@ -69,10 +69,10 @@
             //give the key to the dictionary to get the value of movies
             self.movies = dataDictionary[@"results"];
             //NSLog(@"%@", self.movies);
-            for (NSDictionary *movie in self.movies){
-                //NSLog(@"%@", movie[@"title"]);
-
-            }
+//            for (NSDictionary *movie in self.movies){
+//                NSLog(@"%@", movie[@"title"]);
+//
+//            }
             self.data = self.movies;
             self.filteredData = self.data;
             [self.tableView reloadData];

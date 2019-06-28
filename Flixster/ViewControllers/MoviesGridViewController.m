@@ -12,9 +12,12 @@
 #import "DetailsViewController.h"
 
 @interface MoviesGridViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate>
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
+
 
 @property (nonatomic, strong) NSArray *movies;
-@property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
+
+
 @property (strong, nonatomic) NSArray *data;
 @property (strong, nonatomic) NSArray *filteredData;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -28,7 +31,7 @@
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     self.searchBar.delegate = self;
-
+    
     [self fetchMovies];
     
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
@@ -86,7 +89,7 @@
     
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
     if ([movie[@"poster_path"] isKindOfClass:[NSString class]]) {
-
+        
         NSString *posterURLString = movie[@"poster_path"];
         NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
         

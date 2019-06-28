@@ -1,5 +1,5 @@
 //
-//  MoviesGridViewController.h
+//  VideoViewController.h
 //  Flixster
 //
 //  Created by selinons on 6/27/19.
@@ -10,8 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MoviesGridViewController : UICollectionViewController
-
+@interface VideoViewController : UIViewController
+@property (strong, nonatomic) IBOutlet NSString *videoID;
 @end
 
 NS_ASSUME_NONNULL_END
