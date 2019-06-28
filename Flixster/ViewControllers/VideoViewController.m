@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     NSString *someUrlString = [@"https://api.themoviedb.org/3/movie/" stringByAppendingString:self.videoID];
     NSString *allUrlString = [someUrlString stringByAppendingString:@"/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     //Make the network call

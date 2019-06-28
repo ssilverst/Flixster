@@ -22,12 +22,14 @@
 @property (strong, nonatomic) NSArray *filteredData;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
+
 @end
 
 @implementation MoviesGridViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     self.searchBar.delegate = self;
@@ -86,16 +88,54 @@
     MovieCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MovieCollectionCell" forIndexPath:indexPath];
     
     NSDictionary *movie = self.movies[indexPath.item];
-    
+    NSString *smallerURLString = @"https://image.tmdb.org/t/p/w200";
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
     if ([movie[@"poster_path"] isKindOfClass:[NSString class]]) {
         
         NSString *posterURLString = movie[@"poster_path"];
-        NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
+        NSString *fullSmallPosterURLString = [smallerURLString stringByAppendingString:posterURLString];
+        NSString *fullLargePosterURLString = [baseURLString stringByAppendingString:posterURLString];
         
-        NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
-        cell.posterView.image = nil;
-        [cell.posterView setImageWithURL:posterURL];
+        NSURL *smallPosterURL = [NSURL URLWithString:fullSmallPosterURLString];
+        NSURL *largePosterURL = [NSURL URLWithString:fullLargePosterURLString];
+            NSURLRequest *requestSmall = [NSURLRequest requestWithURL:smallPosterURL];
+            NSURLRequest *requestLarge = [NSURLRequest requestWithURL:largePosterURL];
+            
+            __weak MovieCollectionCell *weakCell = cell;
+            
+            [cell.posterView setImageWithURLRequest:requestSmall
+                                  placeholderImage:nil
+                                           success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *smallImage) {
+                                               
+                                               // smallImageResponse will be nil if the smallImage is already available
+                                               // in cache (might want to do something smarter in that case).
+                                               weakCell.posterView.alpha = 0.0;
+                                               weakCell.posterView.image = smallImage;
+                                               
+                                               [UIView animateWithDuration:0.3
+                                                                animations:^{
+                                                                    
+                                                                    weakCell.posterView.alpha = 1.0;
+                                                                    
+                                                                } completion:^(BOOL finished) {
+                                                                    // The AFNetworking ImageView Category only allows one request to be sent at a time
+                                                                    // per ImageView. This code must be in the completion block.
+                                                                    [weakCell.posterView setImageWithURLRequest:requestLarge
+                                                                                              placeholderImage:smallImage
+                                                                                                       success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage * largeImage) {
+                                                                                                           weakCell.posterView.image = largeImage;
+                                                                                                       }
+                                                                                                       failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                                                                           // do something for the failure condition of the large image request
+                                                                                                           //weakCell.posterView.image = defaultImage;
+                                                                                                           NSLog(@"doing stuff later");
+                                                                                                       }];
+                                                                }];
+                                           }
+                                           failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                               // do something for the failure condition
+                                               // possibly try to get the large image
+                                           }];
     }
     else{
         cell.posterView.image = nil;

@@ -97,26 +97,72 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
-    
+    cell.posterView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"nic-cage"]];
+
     NSDictionary *movie = self.filteredData[indexPath.row];
     cell.titleLabel.text = movie[@"title"];
     cell.synopsisLabel.text = movie[@"overview"];
     NSString *rating = [NSString stringWithFormat:@"%@", movie[@"vote_average"]];
     cell.ratingLabel.text = [@"Rating: " stringByAppendingString:rating];
+    
+    NSString *smallerURLString = @"https://image.tmdb.org/t/p/w200";
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
     if ([movie[@"backdrop_path"] isKindOfClass:[NSString class]]) {
-        NSString *posterURLString = movie[@"backdrop_path"];
-        NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
         
-        NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
-        //blank out the imageview before setting image - avoid flickering
-        cell.posterView.image = nil;
-        [cell.posterView setImageWithURL:posterURL];
+        NSString *posterURLString = movie[@"backdrop_path"];
+        NSString *fullSmallPosterURLString = [smallerURLString stringByAppendingString:posterURLString];
+        NSString *fullLargePosterURLString = [baseURLString stringByAppendingString:posterURLString];
+        
+        NSURL *smallPosterURL = [NSURL URLWithString:fullSmallPosterURLString];
+        NSURL *largePosterURL = [NSURL URLWithString:fullLargePosterURLString];
+        NSURLRequest *requestSmall = [NSURLRequest requestWithURL:smallPosterURL];
+        NSURLRequest *requestLarge = [NSURLRequest requestWithURL:largePosterURL];
+        
+        __weak MovieCell *weakCell = cell;
+        
+        [cell.posterView setImageWithURLRequest:requestSmall
+                               placeholderImage:nil
+                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *smallImage) {
+                                            
+                                            // smallImageResponse will be nil if the smallImage is already available
+                                            // in cache (might want to do something smarter in that case).
+                                            weakCell.posterView.alpha = 0.0;
+                                            weakCell.posterView.image = smallImage;
+                                            
+                                            [UIView animateWithDuration:0.3
+                                                             animations:^{
+                                                                 
+                                                                 weakCell.posterView.alpha = 1.0;
+                                                                 
+                                                             } completion:^(BOOL finished) {
+                                                                 // The AFNetworking ImageView Category only allows one request to be sent at a time
+                                                                 // per ImageView. This code must be in the completion block.
+                                                                 [weakCell.posterView setImageWithURLRequest:requestLarge
+                                                                                            placeholderImage:smallImage
+                                                                                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage * largeImage) {
+                                                                                                         weakCell.posterView.image = largeImage;
+                                                                                                     }
+                                                                                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                                                                         // do something for the failure condition of the large image request
+                                                                                                         //weakCell.posterView.image = defaultImage;
+                                                                                                         NSLog(@"doing stuff later");
+                                                                                                     }];
+                                                             }];
+                                        }
+                                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                            // do something for the failure condition
+                                            // possibly try to get the large image
+                                        }];
+
+        
     }
     else {cell.posterView.image = nil;}
     return cell;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     
     if (searchText.length != 0) {
@@ -133,9 +179,11 @@
     [self.tableView reloadData];
     
 }
+
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     self.searchBar.showsCancelButton = YES;
 }
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchBar.showsCancelButton = NO;
     self.searchBar.text = @"";

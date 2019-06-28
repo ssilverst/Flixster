@@ -22,6 +22,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     // Do any additional setup after loading the view.
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
     if ([self.movie[@"poster_path"] isKindOfClass:[NSString class]]) {
@@ -29,7 +31,18 @@
         NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
         
         NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
-        [self.posterView setImageWithURL:posterURL];
+        if (self.posterView.image==nil)
+        {
+            self.posterView.alpha = 0;
+            [self.posterView setImageWithURL:posterURL];
+            //Animate UIImageView back to alpha 1 over 0.3sec
+            [UIView animateWithDuration:0.3 animations:^{
+                self.posterView.alpha = 1.0;
+            }];
+        }
+        else {
+            [self.posterView setImageWithURL:posterURL];
+        }
     }
     else{self.posterView.image = nil;}
     if ([self.movie[@"poster_path"] isKindOfClass:[NSString class]]) {
@@ -37,7 +50,19 @@
         NSString *fullBackdropURLString = [baseURLString stringByAppendingString:backdropURLString];
         
         NSURL *backdropURL = [NSURL URLWithString:fullBackdropURLString];
-        [self.backdropView setImageWithURL:backdropURL];
+        if (self.backdropView.image==nil)
+        {
+            self.backdropView.alpha = 0;
+            [self.backdropView setImageWithURL:backdropURL];
+
+            //Animate UIImageView back to alpha 1 over 0.3sec
+            [UIView animateWithDuration:0.3 animations:^{
+                self.backdropView.alpha = 1.0;
+            }];
+        }
+        else {
+            [self.backdropView setImageWithURL:backdropURL];
+        }
     }
     else{self.posterView.image = nil;}
     
