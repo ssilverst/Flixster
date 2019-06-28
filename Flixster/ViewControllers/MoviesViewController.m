@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [SVProgressHUD show];
-
+    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.searchBar.delegate = self;
@@ -101,10 +101,11 @@
     NSDictionary *movie = self.filteredData[indexPath.row];
     cell.titleLabel.text = movie[@"title"];
     cell.synopsisLabel.text = movie[@"overview"];
-    
+    NSString *rating = [NSString stringWithFormat:@"%@", movie[@"vote_average"]];
+    cell.ratingLabel.text = [@"Rating: " stringByAppendingString:rating];
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
-    if ([movie[@"poster_path"] isKindOfClass:[NSString class]]) {
-        NSString *posterURLString = movie[@"poster_path"];
+    if ([movie[@"backdrop_path"] isKindOfClass:[NSString class]]) {
+        NSString *posterURLString = movie[@"backdrop_path"];
         NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
         
         NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
