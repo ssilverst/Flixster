@@ -2,49 +2,53 @@
 
 **Flixster** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **X** hours spent in total
+Time spent: **~20** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is complete:
 
-- [ ] User can view a list of movies currently playing in theaters from The Movie Database.
-- [ ] Poster images are loaded using the UIImageView category in the AFNetworking library.
-- [ ] User sees a loading state while waiting for the movies API.
-- [ ] User can pull to refresh the movie list.
+- [ x] User can view a list of movies currently playing in theaters from The Movie Database.
+- [x ] Poster images are loaded using the UIImageView category in the AFNetworking library.
+- [x ] User sees a loading state while waiting for the movies API.
+- [ x] User can pull to refresh the movie list.
 
 The following **optional** features are implemented:
 
-- [ ] User sees an error message when there's a networking error.
-- [ ] Movies are displayed using a CollectionView instead of a TableView.
-- [ ] User can search for a movie.
-- [ ] All images fade in as they are loading.
-- [ ] User can view the large movie poster by tapping on a cell.
-- [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
-- [ ] Customize the selection effect of the cell.
+- [ x] User sees an error message when there's a networking error.
+- [x ] Movies are displayed using a CollectionView instead of a TableView.
+- [x ] User can search for a movie.
+- [x ] All images fade in as they are loading.
+- [ x] User can view the large movie poster by tapping on a cell.
+- [x ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
+- [ x] Customize the selection effect of the cell.
 - [ ] Customize the navigation bar.
-- [ ] Customize the UI.
+- [ x] Customize the UI.
 
 The following **additional** features are implemented:
 
 - [ ] List anything else that you can get done to improve the app functionality!
+[x] User can see a trailer when they click on the movie poster in the details view
+[x] There is a ratings feature that appears in the initial view controller.
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Would like to talk about how to reuse code (there's a lot of copying and pasting lines around the files that I think would live better in a separate class)
+2. How to make multiple network requests throughout a view controller. (i.e. finding a movie and loading a poster image from different get requests. also maybe different apis?). For example, if I want to display similar movies and also recommended movies I will have to call the api twice., 
+3. Also I want to know how to horizontal scroll. 
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/ezgif.com-video-to-gif.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
 Describe any challenges encountered while building the app.
+I found a lot of challenges in the app. One challenge was learning how to use the API. For example, when loading the video trailer, I had to access the value of a key in a dictionary that was in an array that was in a dictionary. It was a lot of digging to figure it out but useful. I also had a lot of challenges with understanding how search bar worked and wished there was some more explanation and guides that I could use to understand how things worked. 
 
 ## Credits
 
