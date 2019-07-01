@@ -31,14 +31,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="277.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vEi-pb-QCY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="278"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vEi-pb-QCY">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="277.5"/>
                                             <color key="backgroundColor" red="0.89813512563705444" green="0.56014518755685461" blue="0.3232391664450015" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </imageView>
-                                        <view userInteractionEnabled="NO" alpha="0.75" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qW7-A8-76X">
-                                            <rect key="frame" x="0.0" y="190" width="375" height="88"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view userInteractionEnabled="NO" alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qW7-A8-76X">
+                                            <rect key="frame" x="0.0" y="189.5" width="375" height="88"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dark Phoenix" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Uq-46-Cc6">
                                                     <rect key="frame" x="18" y="10" width="111" height="36"/>
@@ -64,8 +62,20 @@
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="qW7-A8-76X" secondAttribute="height" multiplier="375:88" id="Ui0-nG-OY2"/>
+                                            </constraints>
                                         </view>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="vEi-pb-QCY" secondAttribute="trailing" id="0yV-GE-gnl"/>
+                                        <constraint firstAttribute="bottom" secondItem="qW7-A8-76X" secondAttribute="bottom" id="13G-rH-R0S"/>
+                                        <constraint firstItem="vEi-pb-QCY" firstAttribute="leading" secondItem="wMg-Ci-NjD" secondAttribute="leading" id="17v-xC-KMK"/>
+                                        <constraint firstItem="vEi-pb-QCY" firstAttribute="top" secondItem="wMg-Ci-NjD" secondAttribute="top" id="PAr-zF-1xg"/>
+                                        <constraint firstItem="qW7-A8-76X" firstAttribute="leading" secondItem="wMg-Ci-NjD" secondAttribute="leading" id="auY-yc-c9k"/>
+                                        <constraint firstAttribute="trailing" secondItem="qW7-A8-76X" secondAttribute="trailing" id="rs4-ZC-XwF"/>
+                                        <constraint firstAttribute="bottom" secondItem="vEi-pb-QCY" secondAttribute="bottom" id="wgH-Qd-pX3"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.22558083919999999" green="0.10568062039999999" blue="0.3674452728" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
